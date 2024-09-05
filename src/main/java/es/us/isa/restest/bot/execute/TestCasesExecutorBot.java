@@ -1,7 +1,8 @@
 package es.us.isa.restest.bot.execute;
 
 import es.us.isa.botica.bot.AbstractBotApplication;
-import es.us.isa.restest.runners.BoticaRESTestExecutor;
+import es.us.isa.restest.runners.RESTestExecutor;
+import es.us.isa.restest.runners.RESTestLoader;
 import org.json.JSONObject;
 
 /**
@@ -17,12 +18,13 @@ public class TestCasesExecutorBot extends AbstractBotApplication {
     String batchId = message.getString("batchId");
     String userConfigPath = message.getString("userConfigPath");
 
-    BoticaRESTestExecutor executor = new BoticaRESTestExecutor(userConfigPath);
+    RESTestLoader loader = new RESTestLoader(userConfigPath);
     // override the class name from config with the one provided
-    executor.setTestClassName(message.getString("testClassName"));
+    loader.setTestClassName(message.getString("testClassName"));
     // temporary fix for the test reporter, documented in botica-bot-restest-reporter
-    executor.setExperimentName(executor.getExperimentName() + "-" + batchId);
+    loader.setExperimentName(loader.getExperimentName() + "-" + batchId);
 
+    RESTestExecutor executor = new RESTestExecutor(loader);
     executor.execute();
 
     publishOrder(
