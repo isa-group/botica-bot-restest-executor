@@ -19,10 +19,8 @@ public class TestCasesExecutorBot extends AbstractBotApplication {
     String userConfigPath = message.getString("userConfigPath");
 
     RESTestLoader loader = new RESTestLoader(userConfigPath);
-    // override the class name from config with the one provided
+    // override the class name from the config with the current batch's class name
     loader.setTestClassName(message.getString("testClassName"));
-    // temporary fix for the test reporter, documented in botica-bot-restest-reporter
-    loader.setExperimentName(loader.getExperimentName() + "-" + batchId);
 
     RESTestExecutor executor = new RESTestExecutor(loader);
     executor.execute();
