@@ -1,6 +1,7 @@
 package es.us.isa.restest.bot.execute;
 
-import es.us.isa.botica.bot.AbstractBotApplication;
+import es.us.isa.botica.bot.BaseBot;
+import es.us.isa.botica.bot.DefaultOrderHandler;
 import es.us.isa.restest.runners.RESTestExecutor;
 import es.us.isa.restest.runners.RESTestLoader;
 import org.json.JSONObject;
@@ -11,8 +12,8 @@ import org.json.JSONObject;
  *
  * @author Alberto Mimbrero
  */
-public class TestCasesExecutorBot extends AbstractBotApplication {
-  @Override
+public class TestCasesExecutorBot extends BaseBot {
+  @DefaultOrderHandler
   public void onOrderReceived(String raw) {
     JSONObject message = new JSONObject(raw);
     String batchId = message.getString("batchId");
