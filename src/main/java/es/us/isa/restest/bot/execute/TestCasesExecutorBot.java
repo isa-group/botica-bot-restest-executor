@@ -14,8 +14,7 @@ import org.json.JSONObject;
  */
 public class TestCasesExecutorBot extends BaseBot {
   @DefaultOrderHandler
-  public void onOrderReceived(String raw) {
-    JSONObject message = new JSONObject(raw);
+  public void onOrderReceived(JSONObject message) {
     String batchId = message.getString("batchId");
     String userConfigPath = message.getString("userConfigPath");
 
