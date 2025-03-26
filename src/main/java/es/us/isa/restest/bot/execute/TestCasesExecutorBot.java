@@ -1,7 +1,7 @@
 package es.us.isa.restest.bot.execute;
 
 import es.us.isa.botica.bot.BaseBot;
-import es.us.isa.botica.bot.DefaultOrderHandler;
+import es.us.isa.botica.bot.OrderHandler;
 import es.us.isa.restest.runners.RESTestExecutor;
 import es.us.isa.restest.runners.RESTestLoader;
 import org.json.JSONObject;
@@ -13,8 +13,9 @@ import org.json.JSONObject;
  * @author Alberto Mimbrero
  */
 public class TestCasesExecutorBot extends BaseBot {
-  @DefaultOrderHandler
-  public void onOrderReceived(JSONObject message) {
+
+  @OrderHandler("execute_test_cases")
+  public void executeTestCases(JSONObject message) {
     String batchId = message.getString("batchId");
     String userConfigPath = message.getString("userConfigPath");
 
@@ -26,6 +27,8 @@ public class TestCasesExecutorBot extends BaseBot {
     executor.execute();
 
     publishOrder(
+        "reporter_bots",
+        "generate_reports",
         new JSONObject().put("batchId", batchId).put("userConfigPath", userConfigPath).toString());
   }
 }
